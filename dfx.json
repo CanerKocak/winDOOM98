@@ -1,16 +1,12 @@
 {
   "canisters": {
-    "doom-windoge-backend": {
-      "candid": "src/doom-windoge-backend/doom-windoge-backend.did",
-      "package": "doom-windoge-backend",
-      "type": "rust"
-    },
     "doom-windoge-frontend": {
       "source": [
         "src/doom-windoge-frontend/dist"
       ],
       "type": "assets",
-      "workspace": "doom-windoge-frontend"
+      "workspace": "doom-windoge-frontend",
+      "optimize": "Oz"
     }
   },
   "defaults": {

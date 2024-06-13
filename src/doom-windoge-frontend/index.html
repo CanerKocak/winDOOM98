@@ -31,7 +31,6 @@
             justify-content: center;
         }
 
-        /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
         canvas.frame {
             background-color: black;
             width: 100vw;
@@ -51,10 +50,31 @@
             font-family: "VT323", monospace;
             font-size: 1em;
         }
+
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 2em;
+        }
+
+        #ad {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.5em;
+            display: none; /* Initially hidden */
+        }
     </style>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 </head>
 <body>
+    <div id="loading">Loading...</div>
+    <div id="ad"></div>
     <div id="container" class="noselect">
         <canvas class="frame" id="canvas" oncontextmenu="event.preventDefault()" tabindex="-1"></canvas>
     </div>
@@ -62,15 +82,20 @@
         <p>WASD to walk, MOUSE to look + shoot, E to interact, ESC to leave focus</p>
         <div>
             <button id="playButton">Pause</button>
-            <input type="range" id="volumeSlider" min="0" max="100" value="50" />
+            <input type="range" id="volumeSlider" min="0" max="100" value="5" />
         </div>
     </div>
     <script>
-        var commonArgs = ["-iwad", "doom1.wad", "-window", "-nogui", "-nomusic", "-config", "default.cfg", "-servername", "doomflare"];
+        var commonArgs = ["-window", "-nomusic", "-config", "default.cfg"];
 
         var Module = {
             onRuntimeInitialized: () => {
-                callMain(commonArgs);
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none'; // Hide loading message
+                    document.getElementById('ad').style.display = 'none'; // Hide ad
+                    document.getElementById('container').style.display = 'flex'; // Show container
+                    callMain(commonArgs);
+                }); 
             },
             noInitialRun: true,
             preRun: () => {
@@ -97,7 +122,10 @@
                 console.log(text);
             },
             setStatus: function (text) {
-                console.log(text);
+                if (text) {
+                    document.getElementById('loading').textContent = text;
+                    console.log(text);
+                }
             },
             totalDependencies: 0,
             monitorRunDependencies: function (left) {
@@ -125,10 +153,19 @@
         function init() {
             resizeCanvas();
 
-            var audio = new Audio('assets/test.mp3');
+            var audio = new Audio('test.mp3');
             audio.loop = true;
+            audio.volume = 0.05;
+
             audio.play().catch(function(error) {
                 console.error('Error playing audio:', error);
+
+                // Fallback: add a user interaction to start the audio
+                document.body.addEventListener('click', function() {
+                    audio.play().catch(function(error) {
+                        console.error('Error playing audio on user interaction:', error);
+                    });
+                }, { once: true });
             });
 
             var playButton = document.getElementById('playButton');
@@ -151,12 +188,14 @@
             });
 
             window.audio = audio;
-            // set audio volume to 5 by default
-            audio.volume = 0.15;
+
+            // Show loading message and hide container initially
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('container').style.display = 'none';
         }
 
         window.addEventListener('load', init);
     </script>
-    <script type="text/javascript" src="websockets-doom.js"></script>
+    <script async type="text/javascript" src="websockets-doom.js"></script>
 </body>
 </html>

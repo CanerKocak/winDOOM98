@@ -14,5 +14,8 @@
   "type": "module",
   "workspaces": [
     "src/doom-windoge-frontend"
-  ]
+  ],
+  "dependencies": {
+    "puppeteer": "^22.11.0"
+  }
 }
