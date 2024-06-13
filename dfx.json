@@ -6,9 +6,6 @@
       "type": "rust"
     },
     "doom-windoge-frontend": {
-      "dependencies": [
-        "doom-windoge-backend"
-      ],
       "source": [
         "src/doom-windoge-frontend/dist"
       ],
