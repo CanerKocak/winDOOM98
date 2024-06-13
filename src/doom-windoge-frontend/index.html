@@ -62,7 +62,7 @@
         <p>WASD to walk, MOUSE to look + shoot, E to interact, ESC to leave focus</p>
         <div>
             <button id="playButton">Pause</button>
-            <input type="range" id="volumeSlider" min="0" max="100" value="100" />
+            <input type="range" id="volumeSlider" min="0" max="100" value="50" />
         </div>
     </div>
     <script>
@@ -127,14 +127,18 @@
 
             var audio = new Audio('assets/test.mp3');
             audio.loop = true;
-            audio.play();
+            audio.play().catch(function(error) {
+                console.error('Error playing audio:', error);
+            });
 
             var playButton = document.getElementById('playButton');
             var volumeSlider = document.getElementById('volumeSlider');
 
             playButton.addEventListener('click', function() {
                 if (audio.paused) {
-                    audio.play();
+                    audio.play().catch(function(error) {
+                        console.error('Error playing audio:', error);
+                    });
                     playButton.textContent = 'Pause';
                 } else {
                     audio.pause();
@@ -147,6 +151,8 @@
             });
 
             window.audio = audio;
+            // set audio volume to 5 by default
+            audio.volume = 0.15;
         }
 
         window.addEventListener('load', init);
