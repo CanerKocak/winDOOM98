@@ -6,7 +6,7 @@
       ],
       "type": "assets",
       "workspace": "doom-windoge-frontend",
-      "optimize": "Oz"
+      "optimize": "size"
     }
   },
   "defaults": {
