@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "src/doom-windoge-backend"
+]
+resolver = "2"

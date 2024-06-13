@@ -1,0 +1,27 @@
+{
+  "canisters": {
+    "doom-windoge-backend": {
+      "candid": "src/doom-windoge-backend/doom-windoge-backend.did",
+      "package": "doom-windoge-backend",
+      "type": "rust"
+    },
+    "doom-windoge-frontend": {
+      "dependencies": [
+        "doom-windoge-backend"
+      ],
+      "source": [
+        "src/doom-windoge-frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "doom-windoge-frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
