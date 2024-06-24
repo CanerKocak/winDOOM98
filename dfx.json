@@ -4,15 +4,9 @@
       "source": [
         "src/doom-windoge-frontend/dist"
       ],
-      "type": "assets",
+      "type":"assets",
       "workspace": "doom-windoge-frontend",
-      "optimize": "Oz"
-    }
-  },
-  "defaults": {
-    "build": {
-      "args": "",
-      "packtool": ""
+      "optimize": "size"
     }
   },
   "output_env_file": ".env",
